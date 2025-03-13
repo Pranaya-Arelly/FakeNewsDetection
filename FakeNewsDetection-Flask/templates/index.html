@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake News Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body style="background-color: {{ bg_color }};">
+
+    <div class="container">
+        <h1>Fake News Detector</h1>
+        <form method="post">
+            <textarea name="news_text" placeholder="Enter news text..." required>{{ text }}</textarea>
+            <button type="submit">Check</button>
+        </form>
+
+        {% if result %}
+        <div class="result">
+            <span class="icon">
+                {% if result == "Real News" %}
+                ✅
+                {% else %}
+                ❌
+                {% endif %}
+            </span>
+            <span class="text">{{ result }}</span>
+        </div>
+        {% endif %}
+
+        <h2>Prediction History</h2>
+        <ul class="history">
+            {% for item in history[-5:] %}
+            <li>
+                {{ item.text }}
+                <span class="icon">
+                    {% if item.result == "Real News" %}
+                    ✅
+                    {% else %}
+                    ❌
+                    {% endif %}
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</body>
+</html>
